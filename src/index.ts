@@ -2,7 +2,7 @@ import { Collector, collector, CollectorFactory } from '@valentin30/signal/core/
 import { composed, ComposedFactory } from '@valentin30/signal/core/composed'
 import { computed, ComputedFactory } from '@valentin30/signal/core/computed'
 import { effect, Effect } from '@valentin30/signal/core/effect'
-import { ignore } from '@valentin30/signal/core/ignore'
+import { Ignore, ignore } from '@valentin30/signal/core/ignore'
 import { ReadonlySignal, signal, SignalFactory } from '@valentin30/signal/core/signal'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 import * as internal from '@valentin30/signal/internal'
@@ -29,17 +29,19 @@ export { internal }
 export interface Config {
     collector?: Maybe<CollectorFactory>
     signal?: Maybe<SignalFactory>
-    effect?: Maybe<Effect>
     computed?: Maybe<ComputedFactory>
     composed?: Maybe<ComposedFactory>
+    effect?: Maybe<Effect>
+    ignore?: Maybe<Ignore>
 }
 
 export function config(config: Config = {}) {
     collector.factory(config.collector)
     signal.factory(config.signal)
-    effect.factory(config.effect)
     computed.factory(config.computed)
     composed.factory(config.composed)
+    effect.factory(config.effect)
+    ignore.factory(config.ignore)
 }
 
 let __shared__: Maybe<Collector<ReadonlySignal<unknown>>> = null
@@ -49,14 +51,14 @@ function shared() {
 }
 
 internal.signal.collector.default(shared)
-internal.effect.collector.default(shared)
 internal.computed.collector.default(shared)
 internal.composed.collector.default(shared)
+internal.effect.collector.default(shared)
 internal.ignore.collector.default(shared)
 
 signal.default(internal.signal)
-ignore.default(internal.ignore)
-effect.default(internal.effect)
 collector.default(internal.collector)
 computed.default(internal.computed)
 composed.default(internal.composed)
+ignore.default(internal.ignore)
+effect.default(internal.effect)

@@ -13,13 +13,10 @@ export function ignore<Value>(value: ReadonlySignal<Value>): Value
 export function ignore<Value>(callback: () => Value): Value
 export function ignore<Value, Args extends any[]>(callback: (...args: Args) => Value, ...args: Args): Value
 export function ignore<Value, Args extends any[]>(callback: ((...args: Args) => Value) | ReadonlySignal<Value>, ...args: Args): Value {
-    const collector = ignore.collector()
-    const read = () => (typeof callback === 'function' ? callback(...args) : callback.read())
-    if (!collector) return read()
     let value: Value
-    collector.collect(() => (value = read()))
+    ignore.collector().ignore(() => (value = typeof callback === 'function' ? callback(...args) : callback.read()))
     return value!
 }
 
-export type IgnoreCollectorFactory = () => Maybe<Collector<ReadonlySignal<unknown>>>
+export type IgnoreCollectorFactory = () => Collector<ReadonlySignal<unknown>>
 ignore.collector = factory<IgnoreCollectorFactory>('signal.collector')

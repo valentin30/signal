@@ -24,4 +24,11 @@ export class Collector<T> implements ICollector<T> {
         this.values = current
         return collected
     }
+
+    public ignore(callback: () => void): void {
+        const current = this.values
+        this.values = null
+        callback()
+        this.values = current
+    }
 }
