@@ -1,0 +1,25 @@
+{
+  "name": "@valentin30/signal",
+  "workspaces": [
+    "packages/core",
+    "packages/react"
+  ],
+  "scripts": {
+    "clean:core": "npm run clean --workspace=packages/core",
+    "build:core": "npm run build --workspace=packages/core",
+    "publish:core": "npm run publish --workspace=packages/core",
+    "dev:core": "npm run dev --workspace=packages/core",
+    "test:core": "npm run test --workspace=packages/core",
+    "test:core:watch": "npm run test:watch --workspace=packages/core",
+    "clean:react": "npm run clean --workspace=packages/react",
+    "build:react": "npm run build --workspace=packages/react",
+    "dev:react": "npm run dev --workspace=packages/react",
+    "test:react": "npm run test --workspace=packages/react",
+    "test:react:watch": "npm run test:watch --workspace=packages/react",
+    "clean": "npm run clean --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:watch": "npm run test:watch --workspaces --if-present"
+  }
+}
