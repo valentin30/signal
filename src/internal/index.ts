@@ -1,4 +1,5 @@
 export * from '@valentin30/signal/internal/collector'
 export * from '@valentin30/signal/internal/composed'
 export * from '@valentin30/signal/internal/computed'
+export * from '@valentin30/signal/internal/effect'
 export * from '@valentin30/signal/internal/signal'

@@ -5,10 +5,5 @@ export interface Collector<T> {
     collect(callback: () => void): Readonly<Set<T>>
 }
 
-export interface CollectorFactoryFunction {
-    <T>(): Collector<T>
-}
-
-type collector_type = typeof collector
-export interface collector extends collector_type {}
+export type CollectorFactoryFunction = <T>() => Collector<T>
 export const collector = factory<CollectorFactoryFunction>('collector')

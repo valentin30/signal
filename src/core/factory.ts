@@ -1,3 +1,4 @@
+import { Arguments } from '@valentin30/signal/core/types/arguments'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 
 export type Factory<Fn extends FactoryFunction> = Fn & {
@@ -7,7 +8,6 @@ export type Factory<Fn extends FactoryFunction> = Fn & {
 }
 
 export type FactoryFunction = (...args: any[]) => any
-export type Arguments<T> = T extends (...args: infer A) => any ? A : never
 
 export function factory<Fn extends FactoryFunction>(name: string): Factory<Fn> {
     let __default__ = null as Maybe<Fn>

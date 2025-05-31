@@ -6,9 +6,6 @@ import { Maybe } from '@valentin30/signal/core/types/maybe'
 import { factory } from '@valentin30/signal/core/factory'
 
 export function computed<T>(compute: () => T, equals?: Equals<T>) {
-    if (!computed.collector()) {
-        throw new Error('computed: collector is not configured.')
-    }
     return new Computed<T>(
         true,
         undefined,
@@ -20,11 +17,9 @@ export function computed<T>(compute: () => T, equals?: Equals<T>) {
         equals,
     )
 }
-computed.collector = factory<ComputedCollectorFactoryFunction>('computed.collector')
 
-export interface ComputedCollectorFactoryFunction {
-    (): Maybe<Collector<ReadonlySignal<unknown>>>
-}
+export type ComputedCollectorFactoryFunction = () => Collector<ReadonlySignal<unknown>>
+computed.collector = factory<ComputedCollectorFactoryFunction>('computed.collector')
 
 export class Computed<T> implements ReadonlySignal<T> {
     private empty: boolean
@@ -65,7 +60,7 @@ export class Computed<T> implements ReadonlySignal<T> {
 
     private dirty(): boolean {
         if (this.empty) return true
-        return Array.from(this.dependencies).some((dependency, index) => !dependency.equals(this.values![index]))
+        return Array.from(this.dependencies).some((dep, index) => !dep.equals(this.values![index]))
     }
 
     public read(): T {
@@ -74,28 +69,16 @@ export class Computed<T> implements ReadonlySignal<T> {
         if (!this.dirty()) return this.value!
 
         const current = this.dependencies
-        const next = this.collector.collect(() => {
-            this.value = this.compute()
-        })
-
+        const next = this.collector.collect(() => (this.value = this.compute()))
         this.dependencies = next
-        this.values = Array.from(this.dependencies).map(dependency => dependency.read())
+        this.values = Array.from(next).map(dep => dep.read())
         this.empty = false
 
         if (!current.size && !next.size) return this.value!
         if (!this.listeners.size) return this.value!
 
-        // Unsubscribe from old dependencies
-        current.forEach(dependency => {
-            if (next.has(dependency)) return
-            this.listeners.forEach(listener => dependency.unsubscribe(listener))
-        })
-
-        // Subscribe to new dependencies
-        next.forEach(dependency => {
-            if (current.has(dependency)) return
-            this.listeners.forEach(listener => dependency.subscribe(listener))
-        })
+        current.forEach(dep => !next.has(dep) && this.listeners.forEach(listener => dep.unsubscribe(listener)))
+        next.forEach(dep => !current.has(dep) && this.listeners.forEach(listener => dep.subscribe(listener)))
 
         return this.value!
     }
@@ -107,12 +90,12 @@ export class Computed<T> implements ReadonlySignal<T> {
 
     public subscribe(callback: Callback): Callback {
         this.listeners.add(callback)
-        this.dependencies.forEach(dependency => dependency.subscribe(callback))
+        this.dependencies.forEach(dep => dep.subscribe(callback))
         return () => this.unsubscribe(callback)
     }
 
     public unsubscribe(callback: Callback): void {
         this.listeners.delete(callback)
-        this.dependencies.forEach(dependency => dependency.unsubscribe(callback))
+        this.dependencies.forEach(dep => dep.unsubscribe(callback))
     }
 }

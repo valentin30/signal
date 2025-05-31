@@ -7,9 +7,6 @@ import { Callback } from '@valentin30/signal/core/types/callback'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 
 export function composed<T>(compute: () => T, write: (value: T) => void, equals?: Equals<T>) {
-    if (!composed.collector()) {
-        throw new Error('composed: collector is not configured.')
-    }
     return new Composed<T>(
         true,
         undefined,
@@ -22,11 +19,9 @@ export function composed<T>(compute: () => T, write: (value: T) => void, equals?
         equals,
     )
 }
-composed.collector = factory<ComposedCollectorFactoryFunction>('composed.collector')
 
-export interface ComposedCollectorFactoryFunction {
-    (): Maybe<Collector<ReadonlySignal<unknown>>>
-}
+export type ComposedCollectorFactoryFunction = () => Collector<ReadonlySignal<unknown>>
+composed.collector = factory<ComposedCollectorFactoryFunction>('composed.collector')
 
 export class Composed<T> extends Computed<T> implements Signal<T> {
     private readonly writeFn: (value: T) => void

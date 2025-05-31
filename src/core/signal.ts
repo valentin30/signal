@@ -6,9 +6,5 @@ import { Writer } from '@valentin30/signal/core/interfaces/writer'
 
 export interface Signal<T> extends Reader<T>, Writer<T>, Comparable<T>, Subscription {}
 export interface ReadonlySignal<T> extends Reader<T>, Comparable<T>, Subscription {}
-
-export interface SignalFactoryFunction {
-    <T>(value: T, equals?: Equals<T>): Signal<T>
-}
-
+export type SignalFactoryFunction = <T>(value: T, equals?: Equals<T>) => Signal<T>
 export const signal = factory<SignalFactoryFunction>('signal')
