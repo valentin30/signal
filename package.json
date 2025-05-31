@@ -1,25 +1,36 @@
 {
   "name": "@valentin30/signal",
-  "workspaces": [
-    "packages/core",
-    "packages/react"
+  "version": "0.0.2",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
   ],
   "scripts": {
-    "clean:core": "npm run clean --workspace=packages/core",
-    "build:core": "npm run build --workspace=packages/core",
-    "publish:core": "npm run publish --workspace=packages/core",
-    "dev:core": "npm run dev --workspace=packages/core",
-    "test:core": "npm run test --workspace=packages/core",
-    "test:core:watch": "npm run test:watch --workspace=packages/core",
-    "clean:react": "npm run clean --workspace=packages/react",
-    "build:react": "npm run build --workspace=packages/react",
-    "dev:react": "npm run dev --workspace=packages/react",
-    "test:react": "npm run test --workspace=packages/react",
-    "test:react:watch": "npm run test:watch --workspace=packages/react",
-    "clean": "npm run clean --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present",
-    "dev": "npm run dev --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
-    "test:watch": "npm run test:watch --workspaces --if-present"
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsup",
+    "publish": "npm run build && npm publish --access public",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valentin30/signal.git"
+  },
+  "author": "Valentin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/valentin30/signal/issues"
+  },
+  "homepage": "https://github.com/valentin30/signal#readme",
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
   }
 }
