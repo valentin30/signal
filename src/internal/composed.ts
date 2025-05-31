@@ -28,9 +28,9 @@ composed.batcher = factory<ComposedBatcherFactory>('composed.batcher')
 composed.collector = factory<ComposedCollectorFactory>('composed.collector')
 
 export class Composed<T> extends Computed<T> implements Signal<T> {
-    private readonly batcher: Collector<Callback>
+    readonly #batcher: Collector<Callback>
 
-    private readonly writeFn: (value: T) => void
+    readonly #write: (value: T) => void
 
     constructor(
         empty: boolean,
@@ -45,12 +45,12 @@ export class Composed<T> extends Computed<T> implements Signal<T> {
         equals: Maybe<Equals<T>>,
     ) {
         super(empty, value, values, dependencies, listeners, collector, compute, equals)
-        this.batcher = batcher
-        this.writeFn = write
+        this.#batcher = batcher
+        this.#write = write
     }
 
     public write(value: T): void {
         if (this.equals(value)) return
-        batch(() => this.writeFn(value), this.batcher)
+        batch(() => this.#write(value), this.#batcher)
     }
 }

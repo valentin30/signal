@@ -5,34 +5,34 @@ export function collector<T>(): ICollector<T> {
 }
 
 export class Collector<T> implements ICollector<T> {
-    private values: Set<T> | null
+    #values: Set<T> | null
 
     constructor(values: Set<T> | null) {
-        this.values = values
+        this.#values = values
     }
 
     public collecting(): boolean {
-        return this.values !== null
+        return this.#values !== null
     }
 
     public add(value: T): void {
-        if (!this.values) return
-        this.values.add(value)
+        if (!this.collecting() || !this.#values) return
+        this.#values.add(value)
     }
 
     public collect(callback: () => void): Set<T> {
-        const current = this.values
-        this.values = new Set<T>()
+        const current = this.#values
+        this.#values = new Set<T>()
         callback()
-        const collected = this.values
-        this.values = current
+        const collected = this.#values
+        this.#values = current
         return collected
     }
 
     public ignore(callback: () => void): void {
-        const current = this.values
-        this.values = null
+        const current = this.#values
+        this.#values = null
         callback()
-        this.values = current
+        this.#values = current
     }
 }

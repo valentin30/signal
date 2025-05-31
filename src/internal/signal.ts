@@ -16,15 +16,15 @@ signal.batcher = factory<SignalBatcherFactory>('signal.batcher')
 signal.collector = factory<SignalCollectorFactory>('signal.collector')
 
 export class Signal<T> implements ISignal<T> {
-    private value: T
+    #value: T
 
-    private readonly equalsFn: Maybe<Equals<T>>
+    readonly #equals: Maybe<Equals<T>>
 
-    private readonly listeners: Set<Callback>
+    readonly #listeners: Set<Callback>
 
-    private readonly batcher: Collector<Callback>
+    readonly #batcher: Collector<Callback>
 
-    private readonly collector: Collector<ReadonlySignal<unknown>>
+    readonly #collector: Collector<ReadonlySignal<unknown>>
 
     constructor(
         value: T,
@@ -33,36 +33,36 @@ export class Signal<T> implements ISignal<T> {
         batcher: Collector<Callback>,
         collector: Collector<ReadonlySignal<unknown>>,
     ) {
-        this.value = value
-        this.equalsFn = equals
-        this.listeners = listeners
-        this.batcher = batcher
-        this.collector = collector
+        this.#value = value
+        this.#equals = equals
+        this.#listeners = listeners
+        this.#batcher = batcher
+        this.#collector = collector
     }
 
     public read(): T {
-        this.collector.add(this)
-        return this.value
+        this.#collector.add(this)
+        return this.#value
     }
 
     public write(value: T): void {
         if (this.equals(value)) return
-        this.value = value
-        if (this.batcher.collecting()) this.listeners.forEach(listener => this.batcher.add(listener))
-        else this.listeners.forEach(listener => listener())
+        this.#value = value
+        if (this.#batcher.collecting()) this.#listeners.forEach(listener => this.#batcher.add(listener))
+        else this.#listeners.forEach(listener => listener())
     }
 
     public equals(other: T): boolean {
-        if (this.equalsFn) return this.equalsFn(this.value, other)
-        return this.value === other
+        if (this.#equals) return this.#equals(this.#value, other)
+        return this.#value === other
     }
 
     public subscribe(callback: Callback): Callback {
-        this.listeners.add(callback)
+        this.#listeners.add(callback)
         return this.unsubscribe.bind(this, callback)
     }
 
     public unsubscribe(callback: Callback): void {
-        this.listeners.delete(callback)
+        this.#listeners.delete(callback)
     }
 }
