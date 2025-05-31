@@ -1,7 +1,7 @@
 import { factory } from '@valentin30/signal/core/factory'
+import { Callback } from '@valentin30/signal/core/types/callback'
 
-export type Effect = () => void
+export type Effect = (callback: EffectCallback) => Callback
 export type EffectCallback = (init: boolean) => EffectCleanup | void
 export type EffectCleanup = (destroy: boolean) => void
-export type EffectFactory = (callback: EffectCallback) => Effect
-export const effect = factory<EffectFactory>('effect')
+export const effect = factory<Effect>('effect')
