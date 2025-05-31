@@ -1,8 +1,8 @@
-import { Collector, collector, CollectorFactoryFunction } from '@valentin30/signal/core/collector'
-import { composed, ComposedFactoryFunction } from '@valentin30/signal/core/composed'
-import { computed, ComputedFactoryFunction } from '@valentin30/signal/core/computed'
-import { effect, EffectFactoryFunction } from '@valentin30/signal/core/effect'
-import { ReadonlySignal, signal, SignalFactoryFunction } from '@valentin30/signal/core/signal'
+import { Collector, collector, CollectorFactory } from '@valentin30/signal/core/collector'
+import { composed, ComposedFactory } from '@valentin30/signal/core/composed'
+import { computed, ComputedFactory } from '@valentin30/signal/core/computed'
+import { effect, EffectFactory } from '@valentin30/signal/core/effect'
+import { ReadonlySignal, signal, SignalFactory } from '@valentin30/signal/core/signal'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 import * as internal from '@valentin30/signal/internal'
 
@@ -13,6 +13,7 @@ export * from '@valentin30/signal/core/interfaces/writer'
 
 export * from '@valentin30/signal/core/types/arguments'
 export * from '@valentin30/signal/core/types/callback'
+export * from '@valentin30/signal/core/types/function'
 export * from '@valentin30/signal/core/types/maybe'
 
 export * from '@valentin30/signal/core/collector'
@@ -24,11 +25,11 @@ export * from '@valentin30/signal/core/signal'
 export { internal }
 
 export interface Config {
-    collector?: Maybe<CollectorFactoryFunction>
-    signal?: Maybe<SignalFactoryFunction>
-    effect?: Maybe<EffectFactoryFunction>
-    computed?: Maybe<ComputedFactoryFunction>
-    composed?: Maybe<ComposedFactoryFunction>
+    collector?: Maybe<CollectorFactory>
+    signal?: Maybe<SignalFactory>
+    effect?: Maybe<EffectFactory>
+    computed?: Maybe<ComputedFactory>
+    composed?: Maybe<ComposedFactory>
 }
 
 export function config(config: Config = {}) {

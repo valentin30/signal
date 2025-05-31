@@ -9,8 +9,8 @@ export function signal<T>(value: T, equals?: Equals<T>): ISignal<T> {
     return new Signal<T>(value, equals, new Set<Callback>(), signal.collector())
 }
 
-export type SignalCollectorFactoryFunction = () => Maybe<Collector<ReadonlySignal<unknown>>>
-signal.collector = factory<SignalCollectorFactoryFunction>('signal.collector')
+export type SignalCollectorFactory = () => Maybe<Collector<ReadonlySignal<unknown>>>
+signal.collector = factory<SignalCollectorFactory>('signal.collector')
 
 export class Signal<T> implements ISignal<T> {
     private value: T

@@ -20,8 +20,8 @@ export function composed<T>(compute: () => T, write: (value: T) => void, equals?
     )
 }
 
-export type ComposedCollectorFactoryFunction = () => Collector<ReadonlySignal<unknown>>
-composed.collector = factory<ComposedCollectorFactoryFunction>('composed.collector')
+export type ComposedCollectorFactory = () => Collector<ReadonlySignal<unknown>>
+composed.collector = factory<ComposedCollectorFactory>('composed.collector')
 
 export class Composed<T> extends Computed<T> implements Signal<T> {
     private readonly writeFn: (value: T) => void

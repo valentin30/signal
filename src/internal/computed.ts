@@ -18,8 +18,8 @@ export function computed<T>(compute: () => T, equals?: Equals<T>) {
     )
 }
 
-export type ComputedCollectorFactoryFunction = () => Collector<ReadonlySignal<unknown>>
-computed.collector = factory<ComputedCollectorFactoryFunction>('computed.collector')
+export type ComputedCollectorFactory = () => Collector<ReadonlySignal<unknown>>
+computed.collector = factory<ComputedCollectorFactory>('computed.collector')
 
 export class Computed<T> implements ReadonlySignal<T> {
     private empty: boolean

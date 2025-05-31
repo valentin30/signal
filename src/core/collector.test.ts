@@ -1,8 +1,8 @@
-import { Collector, collector, CollectorFactoryFunction } from '@valentin30/signal/core/collector'
+import { Collector, collector, CollectorFactory } from '@valentin30/signal/core/collector'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 import { expect, test } from 'vitest'
 
-export function collector_prepare(__default__: Maybe<CollectorFactoryFunction>, __factory__: Maybe<CollectorFactoryFunction>) {
+export function collector_prepare(__default__: Maybe<CollectorFactory>, __factory__: Maybe<CollectorFactory>) {
     collector.default(__default__)
     collector.factory(__factory__)
 }
@@ -20,7 +20,7 @@ export function test_collected_values<T>(expected: Readonly<Set<T>>, collected: 
     })
 }
 
-export function test_collector_implementation(factory: CollectorFactoryFunction) {
+export function test_collector_implementation(factory: CollectorFactory) {
     test('collector with "factory" must return "factory" result', () => {
         // Prepare
         const instance = factory<any>()
