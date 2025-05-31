@@ -11,6 +11,10 @@ export class Collector<T> implements ICollector<T> {
         this.values = values
     }
 
+    public collecting(): boolean {
+        return this.values !== null
+    }
+
     public add(value: T): void {
         if (!this.values) return
         this.values.add(value)

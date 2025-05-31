@@ -1,3 +1,4 @@
+export * from '@valentin30/signal/internal/batch'
 export * from '@valentin30/signal/internal/collector'
 export * from '@valentin30/signal/internal/composed'
 export * from '@valentin30/signal/internal/computed'

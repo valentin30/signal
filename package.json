@@ -1,7 +1,7 @@
 {
   "name": "@valentin30/signal",
   "version": "0.0.3",
-  "description": "Core reactive primitives for building scalable, signal-based state management in TypeScript.",
+  "description": "My take on signals - lightweight reactive primitives inspired by Preact Signals, written in TypeScript.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",

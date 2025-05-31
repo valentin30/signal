@@ -2,6 +2,7 @@ import { factory } from '@valentin30/signal/core/factory'
 
 export interface Collector<T> {
     add(value: T): void
+    collecting(): boolean
     collect(callback: () => void): Readonly<Set<T>>
     ignore(callback: () => void): void
 }

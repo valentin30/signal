@@ -26,7 +26,7 @@ export class Computed<T> implements ReadonlySignal<T> {
 
     private value: T | undefined
 
-    private values: unknown[]
+    private values: [ReadonlySignal<unknown>, unknown][]
 
     private dependencies: Set<ReadonlySignal<unknown>>
 
@@ -41,7 +41,7 @@ export class Computed<T> implements ReadonlySignal<T> {
     constructor(
         empty: boolean,
         value: T | undefined,
-        values: unknown[],
+        values: [ReadonlySignal<unknown>, unknown][],
         dependencies: Set<ReadonlySignal<unknown>>,
         listeners: Set<Callback>,
         collector: Collector<ReadonlySignal<unknown>>,
@@ -60,7 +60,7 @@ export class Computed<T> implements ReadonlySignal<T> {
 
     private dirty(): boolean {
         if (this.empty) return true
-        return Array.from(this.dependencies).some((dep, index) => !dep.equals(this.values![index]))
+        return this.values.some(([dep, value]) => !dep.equals(value))
     }
 
     public read(): T {
@@ -71,7 +71,7 @@ export class Computed<T> implements ReadonlySignal<T> {
         const current = this.dependencies
         const next = this.collector.collect(() => (this.value = this.compute()))
         this.dependencies = next
-        this.values = Array.from(next).map(dep => dep.read())
+        this.values = Array.from(next).map(dep => [dep, dep.read()])
         this.empty = false
 
         if (!current.size && !next.size) return this.value!
@@ -91,7 +91,7 @@ export class Computed<T> implements ReadonlySignal<T> {
     public subscribe(callback: Callback): Callback {
         this.listeners.add(callback)
         this.dependencies.forEach(dep => dep.subscribe(callback))
-        return () => this.unsubscribe(callback)
+        return this.unsubscribe.bind(this, callback)
     }
 
     public unsubscribe(callback: Callback): void {
