@@ -1,12 +1,11 @@
 import { batch } from '@valentin30/signal/core/batch'
-import { Collector, collector } from '@valentin30/signal/core/collector'
+import { collector } from '@valentin30/signal/core/collector'
 import { composed } from '@valentin30/signal/core/composed'
 import { computed } from '@valentin30/signal/core/computed'
 import { effect } from '@valentin30/signal/core/effect'
 import { ignore } from '@valentin30/signal/core/ignore'
-import { ReadonlySignal, signal } from '@valentin30/signal/core/signal'
-import { Callback } from '@valentin30/signal/core/types/callback'
-import { Maybe } from '@valentin30/signal/core/types/maybe'
+import { shared } from '@valentin30/signal/core/shared'
+import { signal } from '@valentin30/signal/core/signal'
 import * as internal from '@valentin30/signal/internal'
 
 export * from '@valentin30/signal/core/interfaces/comparable'
@@ -29,30 +28,19 @@ export * from '@valentin30/signal/core/ignore'
 export * from '@valentin30/signal/core/signal'
 
 export * from '@valentin30/signal/core/config'
+export * from '@valentin30/signal/core/shared'
 
 export { internal }
 
-let __collector__: Maybe<Collector<ReadonlySignal<unknown>>> = null
-function shared_collector() {
-    if (!__collector__) __collector__ = collector()
-    return __collector__
-}
+internal.signal.collector.default(shared.collector)
+internal.computed.collector.default(shared.collector)
+internal.composed.collector.default(shared.collector)
+internal.effect.collector.default(shared.collector)
+internal.ignore.collector.default(shared.collector)
 
-internal.signal.collector.default(shared_collector)
-internal.computed.collector.default(shared_collector)
-internal.composed.collector.default(shared_collector)
-internal.effect.collector.default(shared_collector)
-internal.ignore.collector.default(shared_collector)
-
-let __batcher__: Maybe<Collector<Callback>> = null
-function shared_batcher() {
-    if (!__batcher__) __batcher__ = collector<Callback>()
-    return __batcher__
-}
-
-internal.signal.batcher.default(shared_batcher)
-internal.composed.batcher.default(shared_batcher)
-internal.batch.collector.default(shared_batcher)
+internal.signal.batcher.default(shared.batcher)
+internal.composed.batcher.default(shared.batcher)
+internal.batch.collector.default(shared.batcher)
 
 collector.default(internal.collector)
 signal.default(internal.signal)
