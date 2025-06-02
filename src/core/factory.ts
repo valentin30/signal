@@ -1,4 +1,3 @@
-import { Arguments } from '@valentin30/signal/core/types/arguments'
 import { Function } from '@valentin30/signal/core/types/function'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 
@@ -12,7 +11,7 @@ export function factory<Fn extends Function>(name: string): Factory<Fn> {
     let __default__ = null as Maybe<Fn>
     let __factory__ = null as Maybe<Fn>
 
-    function object(...args: Arguments<Fn>): ReturnType<Fn> {
+    function object(...args: Parameters<Fn>): ReturnType<Fn> {
         if (__factory__) return __factory__(...args)
         if (__default__) return __default__(...args)
         throw new Error(`${name}.factory() not configured!`)

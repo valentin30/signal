@@ -1,4 +1,5 @@
 import { Collector as ICollector } from '@valentin30/signal/core/collector'
+import { Callback } from '@valentin30/signal/core/types/callback'
 
 export function collector<T>(): ICollector<T> {
     return new Collector<T>(null)
@@ -20,7 +21,7 @@ export class Collector<T> implements ICollector<T> {
         this.#values.add(value)
     }
 
-    public collect(callback: () => void): Set<T> {
+    public collect(callback: Callback): Set<T> {
         const current = this.#values
         this.#values = new Set<T>()
         callback()
@@ -29,7 +30,7 @@ export class Collector<T> implements ICollector<T> {
         return collected
     }
 
-    public ignore(callback: () => void): void {
+    public ignore(callback: Callback): void {
         const current = this.#values
         this.#values = null
         callback()

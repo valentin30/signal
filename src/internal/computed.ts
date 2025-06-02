@@ -58,15 +58,10 @@ export class Computed<T> implements ReadonlySignal<T> {
         this.#equals = equals
     }
 
-    #dirty(): boolean {
-        if (this.#empty) return true
-        return this.#values.some(([dep, value]) => !dep.equals(value))
-    }
-
     public read(): T {
         this.#collector.add(this)
 
-        if (!this.#dirty()) return this.#value!
+        if (!this.#empty && !this.#values.some(([dep, value]) => !dep.equals(value))) return this.#value!
 
         const current = this.#dependencies
         const next = this.#collector.collect(() => (this.#value = this.#compute()))
