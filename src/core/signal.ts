@@ -1,10 +1,12 @@
-import { Comparable, Equals } from '@valentin30/signal/core/interfaces/comparable'
+import { Comparable } from '@valentin30/signal/core/interfaces/comparable'
 import { factory } from '@valentin30/signal/core/factory'
-import { Reader } from '@valentin30/signal/core/interfaces/reader'
-import { Subscription } from '@valentin30/signal/core/interfaces/subscription'
-import { Writer } from '@valentin30/signal/core/interfaces/writer'
+import { Readable } from '@valentin30/signal/core/interfaces/readable'
+import { Subscribable } from '@valentin30/signal/core/interfaces/subscribable'
+import { Writable } from '@valentin30/signal/core/interfaces/writable'
+import { Equals } from '@valentin30/signal/core/types/equals'
+import { Peekable } from '@valentin30/signal/core/interfaces/peekable'
 
-export interface Signal<T> extends Reader<T>, Writer<T>, Comparable<T>, Subscription {}
-export interface ReadonlySignal<T> extends Reader<T>, Comparable<T>, Subscription {}
+export interface Signal<T> extends Readable<T>, Writable<T>, Peekable<T>, Comparable<T>, Subscribable {}
+export interface ReadonlySignal<T> extends Readable<T>, Peekable<T>, Comparable<T>, Subscribable {}
 export type SignalFactory = <T>(value: T, equals?: Equals<T>) => Signal<T>
 export const signal = factory<SignalFactory>('signal')

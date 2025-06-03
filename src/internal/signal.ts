@@ -1,8 +1,8 @@
 import { Collector } from '@valentin30/signal/core/collector'
 import { factory } from '@valentin30/signal/core/factory'
-import { Equals } from '@valentin30/signal/core/interfaces/comparable'
 import { Signal as ISignal, ReadonlySignal } from '@valentin30/signal/core/signal'
 import { Callback } from '@valentin30/signal/core/types/callback'
+import { Equals } from '@valentin30/signal/core/types/equals'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 
 export type SignalBatcherFactory = () => Collector<Callback>
@@ -42,6 +42,10 @@ export class Signal<T> implements ISignal<T> {
 
     public read(): T {
         this.#collector.add(this)
+        return this.peek()
+    }
+
+    public peek(): T {
         return this.#value
     }
 

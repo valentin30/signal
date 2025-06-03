@@ -1,7 +1,6 @@
 import { Collector } from '@valentin30/signal/core/collector'
 import { factory } from '@valentin30/signal/core/factory'
 import { ReadonlySignal } from '@valentin30/signal/core/signal'
-import { Maybe } from '@valentin30/signal/core/types/maybe'
 
 export interface Ignore {
     <Value>(value: ReadonlySignal<Value>): Value

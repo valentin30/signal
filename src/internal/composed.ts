@@ -1,11 +1,11 @@
 import { Collector } from '@valentin30/signal/core/collector'
-import { Equals } from '@valentin30/signal/core/interfaces/comparable'
 import { factory } from '@valentin30/signal/core/factory'
 import { ReadonlySignal, Signal } from '@valentin30/signal/core/signal'
 import { Computed } from '@valentin30/signal/internal/computed'
 import { Callback } from '@valentin30/signal/core/types/callback'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 import { batch } from '@valentin30/signal/core/batch'
+import { Equals } from '@valentin30/signal/core/types/equals'
 
 export type ComposedBatcherFactory = () => Collector<Callback>
 export type ComposedCollectorFactory = () => Collector<ReadonlySignal<unknown>>

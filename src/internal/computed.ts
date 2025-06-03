@@ -1,9 +1,9 @@
-import { Equals } from '@valentin30/signal/core/interfaces/comparable'
 import { ReadonlySignal } from '@valentin30/signal/core/signal'
 import { Collector } from '@valentin30/signal/core/collector'
 import { Callback } from '@valentin30/signal/core/types/callback'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 import { factory } from '@valentin30/signal/core/factory'
+import { Equals } from '@valentin30/signal/core/types/equals'
 
 export function computed<T>(compute: () => T, equals?: Equals<T>) {
     return new Computed<T>(
@@ -60,7 +60,10 @@ export class Computed<T> implements ReadonlySignal<T> {
 
     public read(): T {
         this.#collector.add(this)
+        return this.peek()
+    }
 
+    public peek(): T {
         if (!this.#empty && !this.#values.some(([dep, value]) => !dep.equals(value))) return this.#value!
 
         const current = this.#dependencies
