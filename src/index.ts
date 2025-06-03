@@ -13,9 +13,9 @@ export * from '@valentin30/signal/core/interfaces/readable'
 export * from '@valentin30/signal/core/interfaces/subscribable'
 export * from '@valentin30/signal/core/interfaces/writable'
 
+export * from '@valentin30/signal/core/types/callable'
 export * from '@valentin30/signal/core/types/callback'
 export * from '@valentin30/signal/core/types/equals'
-export * from '@valentin30/signal/core/types/function'
 export * from '@valentin30/signal/core/types/maybe'
 
 export * from '@valentin30/signal/core/batch'

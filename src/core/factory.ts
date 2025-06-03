@@ -1,15 +1,15 @@
-import { Function } from '@valentin30/signal/core/types/function'
+import { Callable } from '@valentin30/signal/core/types/callable'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 
-export type Factory<Fn extends Function> = Fn & {
+export type Factory<Fn extends Callable> = Fn & {
     factory(factory: Maybe<Fn>): void
     default(factory: Maybe<Fn>): void
     configured(): boolean
 }
 
-export function factory<Fn extends Function>(name: string): Factory<Fn> {
-    let __default__ = null as Maybe<Fn>
-    let __factory__ = null as Maybe<Fn>
+export function factory<Fn extends Callable>(name: string): Factory<Fn> {
+    let __default__: Fn | null = null
+    let __factory__: Fn | null = null
 
     function object(...args: Parameters<Fn>): ReturnType<Fn> {
         if (__factory__) return __factory__(...args)
@@ -17,9 +17,14 @@ export function factory<Fn extends Function>(name: string): Factory<Fn> {
         throw new Error(`${name}.factory() not configured!`)
     }
 
-    object.default = (factory: Maybe<Fn>) => (__default__ = factory)
-    object.factory = (factory: Maybe<Fn>) => (__factory__ = factory)
     object.configured = () => __default__ !== null || __factory__ !== null
+
+    object.default = (factory: Maybe<Fn>): void => {
+        __default__ = factory ?? null
+    }
+    object.factory = (factory: Maybe<Fn>): void => {
+        __factory__ = factory ?? null
+    }
 
     return object as Factory<Fn>
 }
