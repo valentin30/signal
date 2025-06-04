@@ -4,14 +4,14 @@ import { factory } from '@valentin30/signal/core/factory'
 import { ReadonlySignal } from '@valentin30/signal/core/signal'
 import { Callback } from '@valentin30/signal/core/types/callback'
 
-export function effect(cb: EffectCallback): Callback {
+export function internal_effect(cb: EffectCallback): Callback {
     let cleanupFn: EffectCleanup | null = null
-    let dependencies = effect.collector().collect(() => (cleanupFn = cb(true) ?? null))
+    let dependencies = internal_effect.collector().collect(() => (cleanupFn = cb(true) ?? null))
     dependencies.forEach(dependency => dependency.subscribe(callback))
 
     function callback(): void {
         if (cleanupFn) cleanupFn(false)
-        const next = effect.collector().collect(() => (cleanupFn = cb(false) ?? null))
+        const next = internal_effect.collector().collect(() => (cleanupFn = cb(false) ?? null))
         next.forEach(dependency => !dependencies.has(dependency) && dependency.subscribe(callback))
         dependencies.forEach(dependency => !next.has(dependency) && dependency.unsubscribe(callback))
         dependencies = next
@@ -24,6 +24,9 @@ export function effect(cb: EffectCallback): Callback {
         cleanupFn = null
     }
 }
-
-export type EffectCollectorFactory = () => Collector<ReadonlySignal<unknown>>
-effect.collector = factory<EffectCollectorFactory>('effect.collector')
+export namespace internal_effect {
+    export const collector = factory<collector.Factory>('effect.collector')
+    export namespace collector {
+        export type Factory = () => Collector<ReadonlySignal<unknown>>
+    }
+}

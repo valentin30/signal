@@ -3,10 +3,9 @@ import { collector, CollectorFactory } from '@valentin30/signal/core/collector'
 import { composed, ComposedFactory } from '@valentin30/signal/core/composed'
 import { computed, ComputedFactory } from '@valentin30/signal/core/computed'
 import { effect, Effect } from '@valentin30/signal/core/effect'
-import { ignore } from '@valentin30/signal/core/ignore'
+import { Ignore, ignore } from '@valentin30/signal/core/ignore'
 import { signal, SignalFactory } from '@valentin30/signal/core/signal'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
-import { Ignore } from '@valentin30/signal/internal'
 
 export interface Config {
     collector?: Maybe<CollectorFactory>
