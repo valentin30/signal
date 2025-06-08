@@ -7,6 +7,9 @@ import { Maybe } from '@valentin30/signal/core/types/maybe'
 import { batch } from '@valentin30/signal/core/batch'
 import { Equals } from '@valentin30/signal/core/types/equals'
 
+/**
+ * internal/composed.ts
+ */
 export function internal_composed<T>(compute: () => T, write: (value: T) => void, equals?: Equals<T>) {
     return new internal_composed.Constructor<T>(
         true,
@@ -22,16 +25,15 @@ export function internal_composed<T>(compute: () => T, write: (value: T) => void
     )
 }
 
+/**
+ * internal/composed.ts
+ */
 export namespace internal_composed {
-    export const batcher = factory<batcher.Factory>('composed.batcher')
-    export namespace batcher {
-        export type Factory = () => Collector<Callback>
-    }
+    export type BatcherFactory = () => Collector<Callback>
+    export type CollectorFactory = () => Collector<ReadonlySignal<unknown>>
 
-    export const collector = factory<collector.Factory>('composed.collector')
-    export namespace collector {
-        export type Factory = () => Collector<ReadonlySignal<unknown>>
-    }
+    export const batcher = factory<BatcherFactory>('composed.batcher')
+    export const collector = factory<CollectorFactory>('composed.collector')
 
     export class Constructor<T> extends internal_computed.Constructor<T> implements Signal<T> {
         readonly #batcher: Collector<Callback>

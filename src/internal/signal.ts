@@ -5,20 +5,22 @@ import { Callback } from '@valentin30/signal/core/types/callback'
 import { Equals } from '@valentin30/signal/core/types/equals'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 
+/**
+ * internal/signal.ts
+ */
 export function internal_signal<T>(value: T, equals?: Equals<T>): Signal<T> {
     return new internal_signal.Constructor<T>(value, equals, new Set<Callback>(), internal_signal.batcher(), internal_signal.collector())
 }
 
+/**
+ * internal/signal.ts
+ */
 export namespace internal_signal {
-    export const batcher = factory<batcher.Factory>('signal.batcher')
-    export namespace batcher {
-        export type Factory = () => Collector<Callback>
-    }
+    export type BatcherFactory = () => Collector<Callback>
+    export type CollectorFactory = () => Collector<ReadonlySignal<unknown>>
 
-    export const collector = factory<collector.Factory>('signal.collector')
-    export namespace collector {
-        export type Factory = () => Collector<ReadonlySignal<unknown>>
-    }
+    export const batcher = factory<BatcherFactory>('signal.batcher')
+    export const collector = factory<CollectorFactory>('signal.collector')
 
     export class Constructor<T> implements Signal<T> {
         #value: T

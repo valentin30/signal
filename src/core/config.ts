@@ -7,6 +7,9 @@ import { Ignore, ignore } from '@valentin30/signal/core/ignore'
 import { signal, SignalFactory } from '@valentin30/signal/core/signal'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 
+/**
+ * core/config.ts
+ */
 export interface Config {
     collector?: Maybe<CollectorFactory>
     signal?: Maybe<SignalFactory>
@@ -17,6 +20,9 @@ export interface Config {
     ignore?: Maybe<Ignore>
 }
 
+/**
+ * core/config.ts
+ */
 export function config(config: Config = {}) {
     collector.factory(config.collector)
     signal.factory(config.signal)

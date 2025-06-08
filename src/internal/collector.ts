@@ -1,10 +1,16 @@
 import { Collector } from '@valentin30/signal/core/collector'
 import { Callback } from '@valentin30/signal/core/types/callback'
 
+/**
+ * internal/collector.ts
+ */
 export function internal_collector<T>(): Collector<T> {
     return new internal_collector.Constructor<T>(null)
 }
 
+/**
+ * internal/collector.ts
+ */
 export namespace internal_collector {
     export class Constructor<T> implements Collector<T> {
         #values: Set<T> | null

@@ -3,6 +3,9 @@ import { ReadonlySignal } from '@valentin30/signal/core/signal'
 import { Callback } from '@valentin30/signal/core/types/callback'
 import { Maybe } from '@valentin30/signal/core/types/maybe'
 
+/**
+ * internal/shared.ts
+ */
 export namespace internal_shared {
     let __batcher__: Maybe<Collector<Callback>> = null
     let __collector__: Maybe<Collector<ReadonlySignal<unknown>>> = null

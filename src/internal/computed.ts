@@ -5,6 +5,9 @@ import { Maybe } from '@valentin30/signal/core/types/maybe'
 import { factory } from '@valentin30/signal/core/factory'
 import { Equals } from '@valentin30/signal/core/types/equals'
 
+/**
+ * internal/computed.ts
+ */
 export function internal_computed<T>(compute: () => T, equals?: Equals<T>) {
     return new internal_computed.Constructor<T>(
         true,
@@ -18,11 +21,12 @@ export function internal_computed<T>(compute: () => T, equals?: Equals<T>) {
     )
 }
 
+/**
+ * internal/computed.ts
+ */
 export namespace internal_computed {
-    export const collector = factory<collector.Factory>('computed.collector')
-    export namespace collector {
-        export type Factory = () => Collector<ReadonlySignal<unknown>>
-    }
+    export type CollectorFactory = () => Collector<ReadonlySignal<unknown>>
+    export const collector = factory<CollectorFactory>('computed.collector')
 
     export class Constructor<T> implements ReadonlySignal<T> {
         #empty: boolean
