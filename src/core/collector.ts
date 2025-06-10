@@ -1,5 +1,5 @@
 import { factory } from '@valentin30/signal/core/factory'
-import { AsyncCallback, Callback } from '@valentin30/signal/core/types/callback'
+import { Callback } from '@valentin30/signal/core/types/callback'
 
 /**
  * @module core.collector

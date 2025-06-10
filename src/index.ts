@@ -9,9 +9,9 @@ import * as internal from '@valentin30/signal/internal'
 
 export * from '@valentin30/signal/core/interfaces/comparable'
 export * from '@valentin30/signal/core/interfaces/peekable'
-export * from '@valentin30/signal/core/interfaces/readable'
+export * from '@valentin30/signal/core/interfaces/reader'
 export * from '@valentin30/signal/core/interfaces/subscribable'
-export * from '@valentin30/signal/core/interfaces/writable'
+export * from '@valentin30/signal/core/interfaces/writer'
 
 export * from '@valentin30/signal/core/types/callable'
 export * from '@valentin30/signal/core/types/callback'

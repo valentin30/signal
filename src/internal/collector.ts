@@ -31,17 +31,29 @@ export namespace internal_collector {
         public collect(callback: Callback): Set<T> {
             const current = this.#values
             this.#values = new Set<T>()
-            callback()
-            const collected = this.#values
-            this.#values = current
-            return collected
+            try {
+                callback()
+            } catch (error) {
+                console.error('@valentin30/signal::collector.collect()', error)
+                throw error
+            } finally {
+                const collected = this.#values
+                this.#values = current
+                return collected
+            }
         }
 
         public ignore(callback: Callback): void {
             const current = this.#values
             this.#values = null
-            callback()
-            this.#values = current
+            try {
+                callback()
+            } catch (error) {
+                console.error('@valentin30/signal::collector.ignore()', error)
+                throw error
+            } finally {
+                this.#values = current
+            }
         }
     }
 }

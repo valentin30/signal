@@ -1,13 +1,13 @@
 /**
- * @module core.interfaces.readable
+ * @module core.interfaces.reader
  */
 
 /**
  * Describes a contract that allows for reading a value.
  *
  * @template T The type of the value returned by `read`.
- * @memberof core.interfaces.readable
+ * @memberof core.interfaces.reader
  */
-export interface Readable<T> {
+export interface Reader<T> {
     read(): T
 }

@@ -1,12 +1,9 @@
 /**
- * @module core.interfaces.comparable
- */
-
-/**
+ * `core.interfaces.comparable`
+ *
  * Describes a contract that allows a value to compare itself with another.
  *
  * @template T The underlying value type.
- * @memberof core.interfaces.comparable
  */
 export interface Comparable<T> {
     /**

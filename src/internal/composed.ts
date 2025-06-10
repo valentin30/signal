@@ -57,9 +57,27 @@ export namespace internal_composed {
             this.#write = write
         }
 
-        public write(value: T): void {
-            if (this.equals(value)) return
+        public write(value: T): boolean {
+            if (this.equals(value)) return false
             batch(() => this.#write(value), this.#batcher)
+            return true
         }
+    }
+}
+
+export interface WriterOptions<T> {
+    write(value: T): void
+    batcher(): Collector<Callback>
+}
+
+export class Writer<T> {
+    private readonly options: WriterOptions<T>
+
+    constructor(options: WriterOptions<T>) {
+        this.options = options
+    }
+
+    public write(value: T): void {
+        batch(() => this.options.write(value), this.options.batcher())
     }
 }
