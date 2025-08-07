@@ -1,50 +1,28 @@
-import { batch } from '@valentin30/signal/core/batch'
-import { collector } from '@valentin30/signal/core/collector'
-import { composed } from '@valentin30/signal/core/composed'
-import { computed } from '@valentin30/signal/core/computed'
-import { effect } from '@valentin30/signal/core/effect'
-import { ignore } from '@valentin30/signal/core/ignore'
-import { signal } from '@valentin30/signal/core/signal'
-import * as internal from '@valentin30/signal/internal'
-
-export * from '@valentin30/signal/core/interfaces/comparable'
-export * from '@valentin30/signal/core/interfaces/peekable'
-export * from '@valentin30/signal/core/interfaces/reader'
-export * from '@valentin30/signal/core/interfaces/subscribable'
-export * from '@valentin30/signal/core/interfaces/writer'
-
-export * from '@valentin30/signal/core/types/callable'
-export * from '@valentin30/signal/core/types/callback'
-export * from '@valentin30/signal/core/types/equals'
-export * from '@valentin30/signal/core/types/maybe'
+export * from '@valentin30/signal/app'
 
 export * from '@valentin30/signal/core/batch'
-export * from '@valentin30/signal/core/collector'
 export * from '@valentin30/signal/core/composed'
 export * from '@valentin30/signal/core/computed'
-export * from '@valentin30/signal/core/effect'
-export * from '@valentin30/signal/core/factory'
 export * from '@valentin30/signal/core/ignore'
 export * from '@valentin30/signal/core/signal'
 
-export * from '@valentin30/signal/core/config'
+export * from '@valentin30/signal/core/contracts/comparable'
+export * from '@valentin30/signal/core/contracts/peekable'
+export * from '@valentin30/signal/core/contracts/readable'
+export * from '@valentin30/signal/core/contracts/subscribable'
+export * from '@valentin30/signal/core/contracts/writable'
 
-export { internal }
+export * from '@valentin30/signal/core/internal/collector'
+export * from '@valentin30/signal/core/internal/dependency'
+export * from '@valentin30/signal/core/internal/emitter'
+export * from '@valentin30/signal/core/internal/scheduler'
+export * from '@valentin30/signal/core/internal/tracker'
+export * from '@valentin30/signal/core/internal/value'
 
-internal.signal.collector.default(internal.shared.collector)
-internal.computed.collector.default(internal.shared.collector)
-internal.composed.collector.default(internal.shared.collector)
-internal.effect.collector.default(internal.shared.collector)
-internal.ignore.collector.default(internal.shared.collector)
+export * from '@valentin30/signal/internal'
 
-internal.signal.batcher.default(internal.shared.batcher)
-internal.composed.batcher.default(internal.shared.batcher)
-internal.batch.collector.default(internal.shared.batcher)
+export * from '@valentin30/signal/types/callable'
+export * from '@valentin30/signal/types/callback'
+export * from '@valentin30/signal/types/maybe'
 
-collector.default(internal.collector)
-signal.default(internal.signal)
-computed.default(internal.computed)
-composed.default(internal.composed)
-effect.default(internal.effect)
-batch.default(internal.batch)
-ignore.default(internal.ignore)
+export * from '@valentin30/signal/utils'

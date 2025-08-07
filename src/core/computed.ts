@@ -1,13 +1,11 @@
-import { factory } from '@valentin30/signal/core/factory'
+import { configuration } from '@valentin30/signal/app'
+import { Equals } from '@valentin30/signal/core/contracts/comparable'
 import { ReadonlySignal } from '@valentin30/signal/core/signal'
-import { Equals } from '@valentin30/signal/core/types/equals'
 
-/**
- * core/computed.ts
- */
-export type ComputedFactory = <T>(read: () => T, equals?: Equals<T>) => ReadonlySignal<T>
+export interface ComputedFactory {
+    <T>(compute: () => T, equals?: Equals<T>): ReadonlySignal<T>
+}
 
-/**
- * core/computed.ts
- */
-export const computed = factory<ComputedFactory>('computed')
+export function computed<T>(compute: () => T, equals?: Equals<T>): ReadonlySignal<T> {
+    return configuration().computed(compute, equals)
+}

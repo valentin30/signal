@@ -1,6 +1,6 @@
 {
   "name": "@valentin30/signal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "My take on signals - lightweight reactive primitives inspired by Preact Signals, written in TypeScript.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
