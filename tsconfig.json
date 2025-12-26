@@ -1,4 +1,16 @@
 {
-  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2020",
+    "strict": true,
+    "declaration": true,
+    "stripInternal": true,
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "baseUrl": "src",
+    "paths": {
+      "@valentin30/signal/*": ["*"]
+    }
+  },
   "include": ["src"]
 }

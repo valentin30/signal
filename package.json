@@ -1,13 +1,87 @@
 {
   "name": "@valentin30/signal",
-  "version": "0.2.0",
+  "type": "module",
+  "version": "1.0.0",
   "description": "My take on signals - lightweight reactive primitives inspired by Preact Signals, written in TypeScript.",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "exports": {
+    ".": {
+      "import": "./dist/core.js",
+      "types": "./dist/core.d.ts"
+    },
+    "./core": {
+      "import": "./dist/core.js",
+      "types": "./dist/core.d.ts"
+    },
+    "./core/signal": {
+      "import": "./dist/core/signal.js",
+      "types": "./dist/core/signal.d.ts"
+    },
+    "./core/computed": {
+      "import": "./dist/core/computed.js",
+      "types": "./dist/core/computed.d.ts"
+    },
+    "./core/context": {
+      "import": "./dist/core/context.js",
+      "types": "./dist/core/context.d.ts"
+    },
+    "./core/scheduler": {
+      "import": "./dist/core/scheduler.js",
+      "types": "./dist/core/scheduler.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react.js",
+      "types": "./dist/react.d.ts"
+    },
+    "./react/use-signal": {
+      "import": "./dist/react/use-signal.js",
+      "types": "./dist/react/use-signal.d.ts"
+    },
+    "./react/use-computed": {
+      "import": "./dist/react/use-computed.js",
+      "types": "./dist/react/use-computed.d.ts"
+    },
+    "./react/use-read": {
+      "import": "./dist/react/use-read.js",
+      "types": "./dist/react/use-read.d.ts"
+    },
+    "./event": {
+      "import": "./dist/event.js",
+      "types": "./dist/event.d.ts"
+    },
+    "./event/channel": {
+      "import": "./dist/event/channel.js",
+      "types": "./dist/event/channel.d.ts"
+    },
+    "./event/effect": {
+      "import": "./dist/event/effect.js",
+      "types": "./dist/event/effect.d.ts"
+    },
+    "./event/notifier": {
+      "import": "./dist/event/notifier.js",
+      "types": "./dist/event/notifier.d.ts"
+    },
+    "./builder": {
+      "import": "./dist/builder.js",
+      "types": "./dist/builder.d.ts"
+    },
+    "./builder/value": {
+      "import": "./dist/builder/value.js",
+      "types": "./dist/builder/value.d.ts"
+    },
+    "./builder/node": {
+      "import": "./dist/builder/node.js",
+      "types": "./dist/builder/node.d.ts"
+    },
+    "./builder/sources": {
+      "import": "./dist/builder/sources.js",
+      "types": "./dist/builder/sources.d.ts"
+    },
+    "./builder/consumers": {
+      "import": "./dist/builder/consumers.js",
+      "types": "./dist/builder/consumers.d.ts"
+    }
+  },
+  "sideEffects": false,
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && tsup",
@@ -28,9 +102,13 @@
   "homepage": "https://github.com/valentin30/signal#readme",
   "devDependencies": {
     "@types/node": "^22.15.29",
+    "@types/react": "^19.1.12",
     "rimraf": "^6.0.1",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vitest": "^3.1.4"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19"
   }
 }
