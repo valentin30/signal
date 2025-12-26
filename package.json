@@ -3,6 +3,9 @@
   "type": "module",
   "version": "1.0.0",
   "description": "My take on signals - lightweight reactive primitives inspired by Preact Signals, written in TypeScript.",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./dist/core.js",
